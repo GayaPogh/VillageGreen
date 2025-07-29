@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ fournisseur.raisonSociale }}
+{% endblock %}
+
+{% block body %}
+	<h1>{{ fournisseur.raisonSociale }}</h1>
+
+	<ul>
+		<li>Adresse:
+			{{ fournisseur.adresse }}</li>
+		<li>CP:
+			{{ fournisseur.cp }}</li>
+		<li>Ville:
+			{{ fournisseur.ville }}</li>
+		<li>Téléphone:
+			{{ fournisseur.telephone }}</li>
+		<li>Mail:
+			{{ fournisseur.mail }}</li>
+	</ul>
+
+	<a href="{{ path('app_fournisseur_index') }}">Retour à la liste</a>
+{% endblock %}

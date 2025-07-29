@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fournisseurs
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des Fournisseurs</h1>
+
+	<ul>
+		{% for fournisseur in fournisseurs %}
+			<li>
+				<a href="{{ path('app_fournisseur_show', {'id': fournisseur.id}) }}">
+					{{ fournisseur.raisonSociale }}
+				</a>
+			</li>
+		{% else %}
+			<li>Aucun fournisseur trouvé.</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

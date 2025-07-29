@@ -1,0 +1,34 @@
+@startuml
+class Fournisseur {
+	**id : int**
+	nom : string
+	adresse : string
+	telephone : string
+	email : string
+	<color:#0000dd>categorie : Categorie[]</color>
+}
+
+class SousCategorie {
+	**id : int**
+	nom : string
+	image : string
+}
+
+class Categorie {
+	**id : int**
+	nom : string
+	image : string
+	<color:#0000dd>parent : Categorie</color>
+	<color:#0000dd>enfants : Categorie[]</color>
+	<color:#0000dd>fournisseurs : Fournisseur[]</color>
+}
+
+Fournisseur "*"--"*" Categorie
+Categorie "*"--"1" Categorie
+
+
+hide methods
+
+hide circle
+
+@enduml

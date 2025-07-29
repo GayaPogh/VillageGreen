@@ -1,0 +1,121 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: #d4d8d4;
+    box-shadow: 0 2px 4px rgba(43, 43, 42, 0.1);
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.navbar-bottom {
+    background-color: #4b7724;
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    margin-bottom: -10px;
+}
+
+.fixed-top {
+    background-color: rgba(32, 32, 31, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0 0;
+    z-index: 1030;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(43, 43, 42, 0.1);
+}
+
+.navbar a {
+    color: #42a172;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+}
+
+.navbar .nav-link.active {
+    color: #459e74 !important;
+    /* Նույն գույնը ինչ նորմալ հղումների մոտ */
+    font-weight: bold;
+
+}
+
+.navbar a:hover {
+    color: #c41120;
+    text-decoration: underline;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 46px;
+    font-family: 'Dancing Script', cursive !important;
+    margin-top: 30px;
+    position: relative;
+    top: 5px;
+}
+
+.village {
+    color: rgb(192, 7, 7);
+}
+
+.green {
+    color: #2ba72b;
+}
+
+.logo-link {
+    position: relative;
+    top: -6px;
+    height: center;
+    text-decoration: none;
+}
+
+
+.search-container input {
+    background-color: #3e6129;
+    /* կանաչ */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.4rem 3rem;
+    outline: none;
+}
+
+.search-container input::placeholder {
+    color: #e0e0e0;
+    /* placeholder-ի բաց գույն */
+}
+
+.search-btn {
+    background-color: rgb(217, 224, 206);
+    color: #3b823e;
+    border: none;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    margin-left: -50px;
+    /* փոքր տարածություն input-ի կողքին */
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.icons a {
+    margin-left: 15px;
+    color: #222;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.icons a:hover svg {
+    stroke: #7c1333;
+    fill: #d3c617;
+    color: #1835b6;
+}

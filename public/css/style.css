@@ -1,0 +1,14 @@
+ .body {
+     margin-top: 150px;
+     background-color: rgba(215, 217, 204, 1);
+ }
+
+ .feature-icon {
+     transition: transform 0.3s ease, color 0.3s ease;
+ }
+
+ .feature-icon:hover {
+     transform: scale(1.2) rotate(5deg);
+     color: #558042;
+     /* Bootstrap primary */
+ }
