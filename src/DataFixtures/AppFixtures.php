@@ -11,48 +11,45 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // Գլխավոր կատեգորիաների անունները և իրենց ենթակատեգորիաները
-        $categoriesData = [
-            'Claviers' => ['Synthétiseur', 'Piano numérique'],
-            'Cordes' => ['Guitare', 'Violon'],
-            'Cuivres' => ['Trompette', 'Tuba'],
-            'Bois' => ['Flûte', 'Clarinette'],
-            'Percussion' => ['Caisse claire', 'Xylophone'],
+        $mainCategories = [];
+
+        // Գլխավոր կատեգորիաներ
+        foreach (['Claviers', 'Cordes', 'Cuivres', 'Bois', 'Percussion', 'Accessoires'] as $name) {
+            $cat = new Categorie();
+            $cat->setNom($name);
+            $manager->persist($cat);
+            $mainCategories[$name] = $cat;
+        }
+
+        // Sous-catégories + assign images sc1.avif, sc2.avif...
+        $subCategoryData = [
+            'Claviers'    => ['Synthétiseur', 'Piano numérique', 'Royale'],
+            'Cordes'      => ['Guitare', 'Violon'],
+            'Cuivres'     => ['Trompette', 'Tuba'],
+            'Bois'        => ['Flûte', 'Clarinette'],
+            'Percussion'  => ['Caisse claire', 'Xylophone'],
             'Accessoires' => ['Câbles', 'Support']
         ];
 
-        // Գլխավոր կատեգորիաները պահելու համար
-        $categoryObjects = [];
+        $imageIndex = 1;
 
-        // Նախ ստեղծում ենք գլխավոր կատեգորիաները
-        foreach ($categoriesData as $categoryName => $subCategories) {
-            $parent = new Categorie();
-            $parent->setNom($categoryName);
-            $manager->persist($parent);
+        foreach ($subCategoryData as $parentName => $children) {
+            $parent = $mainCategories[$parentName];
 
-            $categoryObjects[$categoryName] = $parent;
-        }
-
-        // Այժմ ստեղծում ենք ենթակատեգորիաները և կապում parent-ին
-        foreach ($categoriesData as $categoryName => $subCategories) {
-            $parent = $categoryObjects[$categoryName];
-            foreach ($subCategories as $subCategoryName) {
-                $subCategory = new Categorie();
-                $subCategory->setNom($subCategoryName);
-                $subCategory->setParent($parent);
-                $manager->persist($subCategory);
+            foreach ($children as $childName) {
+                $sub = new Categorie();
+                $sub->setNom($childName);
+                $sub->setParent($parent);
+                $sub->setImage('sc' . $imageIndex . '.avif');
+                $imageIndex++;
+                $manager->persist($sub);
             }
         }
 
-        // Ստեղծում ենք fournisseur
+        // Fournisseur
         $fournisseur = new Fournisseur();
         $fournisseur->setNom('Yamaha');
-
-        // Կապում ենք fournisseur-ին մի քանի կատեգորիաների հետ, օրինակ՝ Claviers
-        if (isset($categoryObjects['Claviers'])) {
-            $fournisseur->addCategorie($categoryObjects['Claviers']);
-        }
-
+        $fournisseur->addCategorie($mainCategories['Claviers']);
         $manager->persist($fournisseur);
 
         $manager->flush();

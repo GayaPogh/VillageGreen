@@ -5,13 +5,25 @@
 {% endblock %}
 
 {% block body %}
-	<h2>Sous-catégories de
-		{{ categorie.nom }}</h2>
-	<ul>
-		{% for sousCategorie in sousCategories %}
-			<li>{{ sousCategorie.nom }}</li>
+	<div class="container my-5">
+		<h2 class="text-center mb-4">Sous-catégories de
+			{{ categorie.nom }}</h2>
+
+		{% if sousCategories|length > 0 %}
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+				{% for sousCategorie in sousCategories %}
+					<div class="col">
+						<div class="card h-100 text-center shadow-sm">
+							<img src="/images/{{ sousCategorie.image ?? 'default.jpg' }}" alt="{{ sousCategorie.nom }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+							<div class="card-body">
+								<h5 class="card-title">{{ sousCategorie.nom }}</h5>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
 		{% else %}
-			<li>Aucune sous-catégorie disponible.</li>
-		{% endfor %}
-	</ul>
+			<p class="text-muted">Aucune sous-catégorie disponible.</p>
+		{% endif %}
+	</div>
 {% endblock %}
