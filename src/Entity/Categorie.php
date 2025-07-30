@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-
+use App\Entity\Fournisseur;
+use App\Repository\CategorieRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,10 +30,31 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist', 'remove'])]
     private Collection $enfants;
 
-    #[ORM\ManyToMany(targetEntity: Fournisseur::class, inversedBy: 'categorie')]
+    #[ORM\ManyToMany(targetEntity: Fournisseur::class, inversedBy: 'categories')]
     #[ORM\JoinTable(name: 'fournisseur_categorie')]
     private Collection $fournisseurs;
 
+    #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'fournisseurs')]
+private Collection $categories;
+
+public function addCategorie(Categorie $categorie): static
+{
+    if (!$this->categories->contains($categorie)) {
+        $this->categories->add($categorie);
+        $categorie->addFournisseur($this);
+    }
+
+    return $this;
+}
+
+public function removeCategorie(Categorie $categorie): static
+{
+    if ($this->categories->removeElement($categorie)) {
+        $categorie->removeFournisseur($this);
+    }
+
+    return $this;
+}
     public function __construct()
     {
         $this->enfants = new ArrayCollection();
@@ -120,7 +142,7 @@ class Categorie
     {
         if (!$this->fournisseurs->contains($fournisseur)) {
             $this->fournisseurs->add($fournisseur);
-            $fournisseur->addcategorie($this);
+            $fournisseur->addCategorie($this);
         }
 
         return $this;
@@ -129,7 +151,7 @@ class Categorie
     public function removeFournisseur(Fournisseur $fournisseur): static
     {
         if ($this->fournisseurs->removeElement($fournisseur)) {
-            $fournisseur->removecategorie($this);
+            $fournisseur->removeCategorie($this);
         }
 
         return $this;

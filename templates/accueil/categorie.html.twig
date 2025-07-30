@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AcceuilContriller!
+{% block title %}
+	{{ categorie.nom }}
 {% endblock %}
 
 {% block body %}
-	<br><br>
 	<h2>Sous-catégories de
 		{{ categorie.nom }}</h2>
 	<ul>
@@ -14,5 +14,4 @@
 			<li>Aucune sous-catégorie disponible.</li>
 		{% endfor %}
 	</ul>
-
 {% endblock %}

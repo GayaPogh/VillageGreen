@@ -28,11 +28,11 @@ class Fournisseur
     private ?string $email = null;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'fournisseurs')]
-    private Collection $categorie;
+    private Collection $categories;
 
     public function __construct()
     {
-        $this->categorie = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     // Getters & setters
@@ -90,7 +90,7 @@ class Fournisseur
      * @return Collection<int, Categorie>
      */
     
-    public function getCategorie(): Collection
+    public function getCategories(): Collection
     {
         return $this->categories;
     }
