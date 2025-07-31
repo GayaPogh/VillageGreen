@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
             $mainCategories[$name] = $cat;
         }
 
-        // Sous-catégories + assign images sc1.avif, sc2.avif...
+        // Sous-catégories + assign images sc1.jpeg, sc2.jpeg...
         $subCategoryData = [
             'Claviers'    => ['Synthétiseur', 'Piano numérique', 'Royale'],
             'Cordes'      => ['Guitare', 'Violon'],
@@ -40,7 +40,7 @@ class AppFixtures extends Fixture
                 $sub = new Categorie();
                 $sub->setNom($childName);
                 $sub->setParent($parent);
-                $sub->setImage('sc' . $imageIndex . '.avif');
+                $sub->setImage('sc' . $imageIndex . '.jpeg');
                 $imageIndex++;
                 $manager->persist($sub);
             }
