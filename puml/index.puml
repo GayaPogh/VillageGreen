@@ -2,9 +2,8 @@
 class Fournisseur {
 	**id : int**
 	nom : string
-	adresse : string
-	telephone : string
 	email : string
+	telephone : string
 	<color:#0000dd>categories : Categorie[]</color>
 }
 
@@ -15,12 +14,10 @@ class Categorie {
 	<color:#0000dd>parent : Categorie</color>
 	<color:#0000dd>enfants : Categorie[]</color>
 	<color:#0000dd>fournisseurs : Fournisseur[]</color>
-	<color:#0000dd>categories : Categorie[]</color>
 }
 
 Fournisseur "*"--"*" Categorie
 Categorie "*"--"1" Categorie
-Categorie "*"--"*" Categorie
 
 
 hide methods

@@ -1,8 +1,11 @@
 <?php
 
+// src/Controller/AccueilController.php
+
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
+use App\Repository\FournisseurRepository;
 use App\Entity\Categorie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,13 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-    public function index(CategorieRepository $categorieRepository): Response
+    public function index(
+        CategorieRepository $categorieRepository,
+        FournisseurRepository $fournisseurRepository // <-- ստանալ repository
+    ): Response
     {
         $categories = $categorieRepository->findBy(['parent' => null]);
-
+        $fournisseurs = $fournisseurRepository->findAll(); // <-- վերցնել բոլոր fournisseurs
 
         return $this->render('accueil/index.html.twig', [
             'categories' => $categories,
+            'fournisseurs' => $fournisseurs, // <-- Twig-ին ուղարկել
         ]);
     }
 
@@ -30,3 +37,4 @@ class AccueilController extends AbstractController
         ]);
     }
 }
+

@@ -34,27 +34,6 @@ class Categorie
     #[ORM\JoinTable(name: 'fournisseur_categorie')]
     private Collection $fournisseurs;
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'fournisseurs')]
-private Collection $categories;
-
-public function addCategorie(Categorie $categorie): static
-{
-    if (!$this->categories->contains($categorie)) {
-        $this->categories->add($categorie);
-        $categorie->addFournisseur($this);
-    }
-
-    return $this;
-}
-
-public function removeCategorie(Categorie $categorie): static
-{
-    if ($this->categories->removeElement($categorie)) {
-        $categorie->removeFournisseur($this);
-    }
-
-    return $this;
-}
     public function __construct()
     {
         $this->enfants = new ArrayCollection();

@@ -15,10 +15,10 @@ class CategorieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Categorie::class);
     }
-    public function findRootCategories()
+    public function findRootCategories(?Categorie $parent = null)
 {
-    return $this->createQueryBuilder('c')
-        ->andWhere('c.parent = :parent') // Ճիշտ դաշտն է "parent"
+     return $this->createQueryBuilder('c')
+        ->andWhere('c.parent = :parent')
         ->setParameter('parent', $parent)
         ->orderBy('c.nom', 'ASC')
         ->getQuery()

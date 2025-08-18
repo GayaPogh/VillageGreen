@@ -47,11 +47,25 @@ class AppFixtures extends Fixture
         }
 
         // Fournisseur
-        $fournisseur = new Fournisseur();
-        $fournisseur->setNom('Yamaha');
-        $fournisseur->addCategorie($mainCategories['Claviers']);
-        $manager->persist($fournisseur);
 
+        $fournisseurs = [
+    ['nom' => 'Yamaha', 'categorie' => 'Claviers'],
+    ['nom' => 'Fender', 'categorie' => 'Cordes'],
+    ['nom' => 'Pearl', 'categorie' => 'Percussion'],
+    ['nom' => 'Selmer', 'categorie' => 'Bois'],
+    ['nom' => 'Roland', 'categorie' => 'Claviers'],
+    ['nom' => 'Zildjian', 'categorie' => 'Percussion'],
+    
+];
+
+foreach ($fournisseurs as $data) {
+    $f = new Fournisseur();
+    $f->setNom($data['nom']);
+    $f->setEmail(strtolower($data['nom']).'@example.com');
+    $f->setTelephone('01 23 45 67 89');
+    $f->addCategorie($mainCategories[$data['categorie']]);
+    $manager->persist($f);
+}
         $manager->flush();
     }
 }

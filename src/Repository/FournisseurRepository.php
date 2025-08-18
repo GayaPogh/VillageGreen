@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Furnisseur;
+use App\Entity\Fournisseur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Furnisseur>
+ * @extends ServiceEntityRepository<Fournisseur>
  */
-class FurnisseurRepository extends ServiceEntityRepository
+class FournisseurRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Furnisseur::class);
+        parent::__construct($registry, Fournisseur::class);
     }
 
     //    /**
-    //     * @return Furnisseur[] Returns an array of Furnisseur objects
+    //     * @return Fournisseur[] Returns an array of Fournisseur objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class FurnisseurRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Furnisseur
+    //    public function findOneBySomeField($value): ?Fournisseur
     //    {
     //        return $this->createQueryBuilder('f')
     //            ->andWhere('f.exampleField = :val')

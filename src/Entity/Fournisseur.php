@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\FournisseurRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FournisseurRepository::class)]
 class Fournisseur
@@ -19,13 +19,10 @@ class Fournisseur
     private string $nom;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adresse = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $telephone = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $telephone = null;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'fournisseurs')]
     private Collection $categories;
@@ -34,8 +31,6 @@ class Fournisseur
     {
         $this->categories = new ArrayCollection();
     }
-
-    // Getters & setters
 
     public function getId(): ?int
     {
@@ -53,14 +48,14 @@ class Fournisseur
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getEmail(): ?string
     {
-        return $this->adresse;
+        return $this->email;
     }
 
-    public function setAdresse(?string $adresse): static
+    public function setEmail(?string $email): static
     {
-        $this->adresse = $adresse;
+        $this->email = $email;
         return $this;
     }
 
@@ -75,21 +70,9 @@ class Fournisseur
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(?string $email): static
-    {
-        $this->email = $email;
-        return $this;
-    }
-
     /**
      * @return Collection<int, Categorie>
      */
-    
     public function getCategories(): Collection
     {
         return $this->categories;
@@ -105,7 +88,7 @@ class Fournisseur
         return $this;
     }
 
-    public function removecategorie(categorie $categorie): static
+    public function removeCategorie(Categorie $categorie): static
     {
         if ($this->categories->removeElement($categorie)) {
             $categorie->removeFournisseur($this);
