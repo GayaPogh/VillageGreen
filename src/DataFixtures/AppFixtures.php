@@ -24,11 +24,11 @@ class AppFixtures extends Fixture
         // Sous-catégories + assign images sc1.jpeg, sc2.jpeg...
         $subCategoryData = [
             'Claviers'    => ['Synthétiseur', 'Piano numérique', 'Royale'],
-            'Cordes'      => ['Guitare', 'Violon'],
-            'Cuivres'     => ['Trompette', 'Tuba'],
-            'Bois'        => ['Flûte', 'Clarinette'],
-            'Percussion'  => ['Caisse claire', 'Xylophone'],
-            'Accessoires' => ['Câbles', 'Support']
+            'Cordes'      => ['Guitare', 'Violon', 'Violoncelle'],
+            'Cuivres'     => ['Trompette', 'Tuba', 'Saxophone'],
+            'Bois'        => ['Flûte', 'Clarinette', 'Accordion'],
+            'Percussion'  => ['Caisse claire', 'Xylophone', 'Batterie'],
+            'Accessoires' => ['Câbles', 'Support', 'Casques']
         ];
 
         $imageIndex = 1;
