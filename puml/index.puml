@@ -1,10 +1,37 @@
 @startuml
+class Commande {
+	**id : int**
+	<color:#0000dd>client : Client</color>
+	dateCommande : DateTimeInterface
+	statut : string
+	<color:#0000dd>lignesCommande : LigneCommande[]</color>
+}
+
 class Fournisseur {
 	**id : int**
 	nom : string
 	email : string
 	telephone : string
 	<color:#0000dd>categories : Categorie[]</color>
+}
+
+class Commercial {
+	**id : string**
+	nom : string
+	email : string
+	<color:#0000dd>clients : Client[]</color>
+	<color:#0000dd>utilisateurs : Utilisateur[]</color>
+}
+
+class Client {
+	**id : int**
+	nom : string
+	prenom : string
+	email : string
+	telephone : string
+	adresse : string
+	<color:#0000dd>commandes : Commande[]</color>
+	<color:#0000dd>commercial : Commercial</color>
 }
 
 class Categorie {
@@ -14,10 +41,49 @@ class Categorie {
 	<color:#0000dd>parent : Categorie</color>
 	<color:#0000dd>enfants : Categorie[]</color>
 	<color:#0000dd>fournisseurs : Fournisseur[]</color>
+	<color:#0000dd>produits : Produit[]</color>
 }
 
+class Utilisateur {
+	**id : int**
+	email : string
+	motDePasseH : string
+	role : string
+	dateCreation : DateTimeInterface
+	actif : bool
+	<color:#0000dd>commercial : Commercial</color>
+	<color:#0000dd>client : Client</color>
+}
+
+class LigneCommande {
+	**id : int**
+	<color:#0000dd>commande : Commande</color>
+	quantite : int
+	prix : float
+}
+
+class Produit {
+	**id : int**
+	libelleLong : string
+	libelleCourt : string
+	prixAchat : string
+	photo : string
+	referenceFournisseur : string
+	actif : bool
+	publie : bool
+	createdAt : DateTimeImmutable
+	updatedAt : DateTimeImmutable
+	<color:#0000dd>categorie : Categorie</color>
+}
+
+Commande "*"--"1" Client
+Commande "1"--"*" LigneCommande
 Fournisseur "*"--"*" Categorie
+Commercial "1"--"*" Client
+Commercial "1"--"*" Utilisateur
 Categorie "*"--"1" Categorie
+Categorie "1"--"*" Produit
+Utilisateur "*"--"1" Client
 
 
 hide methods

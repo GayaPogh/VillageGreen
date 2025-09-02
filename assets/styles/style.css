@@ -3,6 +3,20 @@
      background-color: rgb(156, 161, 156);
  }
 
+  .text-success {
+    font-family: 'Dancing Script',cursive;
+  } 
+  
+  .feature-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .feature-icon:hover {
+      transform: scale(1.2) rotate(5deg);
+      color: #558042;
+      /* Bootstrap primary */
+  }
+
  .card-img-wrapper {
      position: relative;
      height: 250px;

@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Entity\Fournisseur;
 use App\Repository\CategorieRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-
+use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Fournisseur;
+use App\Entity\Produit;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[ORM\Table(name: "categorie")]
 class Categorie
 {
     #[ORM\Id]
@@ -18,7 +19,7 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private string $nom;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
@@ -27,27 +28,29 @@ class Categorie
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?Categorie $parent = null;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $enfants;
 
     #[ORM\ManyToMany(targetEntity: Fournisseur::class, inversedBy: 'categories')]
     #[ORM\JoinTable(name: 'fournisseur_categorie')]
     private Collection $fournisseurs;
 
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    private Collection $produits;
+
     public function __construct()
     {
         $this->enfants = new ArrayCollection();
         $this->fournisseurs = new ArrayCollection();
+        $this->produits = new ArrayCollection();
     }
-
-    // Getters & setters...
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -80,9 +83,7 @@ class Categorie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
+    /** @return Collection<int, Categorie> */
     public function getEnfants(): Collection
     {
         return $this->enfants;
@@ -94,24 +95,18 @@ class Categorie
             $this->enfants->add($enfant);
             $enfant->setParent($this);
         }
-
         return $this;
     }
 
     public function removeEnfant(Categorie $enfant): static
     {
-        if ($this->enfants->removeElement($enfant)) {
-            if ($enfant->getParent() === $this) {
-                $enfant->setParent(null);
-            }
+        if ($this->enfants->removeElement($enfant) && $enfant->getParent() === $this) {
+            $enfant->setParent(null);
         }
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Fournisseur>
-     */
+    /** @return Collection<int, Fournisseur> */
     public function getFournisseurs(): Collection
     {
         return $this->fournisseurs;
@@ -123,7 +118,6 @@ class Categorie
             $this->fournisseurs->add($fournisseur);
             $fournisseur->addCategorie($this);
         }
-
         return $this;
     }
 
@@ -132,7 +126,29 @@ class Categorie
         if ($this->fournisseurs->removeElement($fournisseur)) {
             $fournisseur->removeCategorie($this);
         }
+        return $this;
+    }
 
+    /** @return Collection<int, Produit> */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): static
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits->add($produit);
+            $produit->setCategorie($this);
+        }
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): static
+    {
+        if ($this->produits->removeElement($produit) && $produit->getCategorie() === $this) {
+            $produit->setCategorie(null);
+        }
         return $this;
     }
 }

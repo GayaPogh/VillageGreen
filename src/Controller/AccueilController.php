@@ -27,8 +27,7 @@ class AccueilController extends AbstractController
             'fournisseurs' => $fournisseurs, // <-- Twig-ին ուղարկել
         ]);
     }
-
-    #[Route('/categorie/{id}', name: 'categorie_show')]
+  #[Route('/categorie/{id}', name: 'categorie_show')]
     public function showCategorie(Categorie $categorie): Response
     {
         return $this->render('accueil/categorie.html.twig', [
@@ -36,5 +35,6 @@ class AccueilController extends AbstractController
             'sousCategories' => $categorie->getEnfants()
         ]);
     }
+
 }
 

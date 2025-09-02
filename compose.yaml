@@ -2,13 +2,13 @@ services:
   web:
     build: .
     ports:
-    - 8000:8000
+      - 8000:8000
     volumes:
-    - ../:/var/www
+      - ../:/var/www
     extra_hosts:
-    - host.docker.internal:host-gateway
+      - host.docker.internal:host-gateway
   db:
-    image: mariadb:10.6
+    image: mariadb:10.11.13
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Afpa1234
@@ -16,12 +16,12 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-    - 8080:80
+      - 8080:80
     environment:
-    - PMA_ARBITRARY=1
+      - PMA_ARBITRARY=1
   mailhog:
     image: mailhog/mailhog:latest
     restart: always
     ports:
-    - 1025:1025
-    - 8025:8025
+      - 1025:1025
+      - 8025:8025
