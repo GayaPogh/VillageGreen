@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats pour "{{ query }}"
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h2>Résultats de recherche pour : "{{ query }}"</h2>
+
+		{% if produits|length > 0 %}
+			<div class="row row-cols-1 row-cols-md-3 g-4">
+				{% for produit in produits %}
+					<div class="col">
+						<div class="card h-100">
+							<img src="{{ asset('images/' ~ (produit.photo ?? 'default.jpg')) }}" class="card-img-top" alt="{{ produit.libelleLong }}">
+							<div class="card-body">
+								<h5 class="card-title">{{ produit.libelleLong }}</h5>
+								<p class="card-text text-success fw-bold">{{ produit.prixAchat }}
+									€</p>
+								<a href="{{ path('panier_add', {id: produit.id}) }}" class="btn btn-success">Ajouter au panier</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<p>Aucun produit trouvé.</p>
+		{% endif %}
+	</div>
+{% endblock %}

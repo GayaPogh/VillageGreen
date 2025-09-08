@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Produits de
+	{{ sousCategorie.nom }}
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h2 class="text-center mb-4">Produits dans
+			{{ sousCategorie.nom }}</h2>
+
+		{% if produits|length > 0 %}
+			<div class="row row-cols-1 row-cols-md-3 g-4">
+				{% for produit in produits %}
+					<div class="col">
+						<div class="card h-100 shadow-sm text-center">
+							<img src="{{ asset('images/' ~ (produit.photo ?? 'default.jpg')) }}" alt="{{ produit.libelleLong }}" class="card-img-top" style="height:200px; object-fit:cover;">
+							<div class="card-body">
+								<h5 class="card-title">{{ produit.libelleLong }}</h5>
+								<p class="text-success fw-bold">{{ produit.prixAchat }}
+									€</p>
+								<button class="btn btn-success mt-2 js-add-to-cart" data-id="{{ produit.id }}">
+									Ajouter au panier
+								</button>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<p class="text-center">Aucun produit disponible pour cette sous-catégorie.</p>
+		{% endif %}
+		<div class="text-center mt-4">
+			<a href="{{ path('categorie_show', {id: sousCategorie.parent.id}) }}" class="btn btn-outline-secondary">
+				⬅ Retour à
+				{{ sousCategorie.parent.nom }}
+			</a>
+		</div>
+	</div>
+
+
+	{% block javascripts %}
+		<script>
+			document.querySelectorAll('.js-add-to-cart').forEach(btn => {
+btn.addEventListener('click', function () {
+const id = this.dataset.id;
+
+fetch('{{ path("panier_add", {"id": "ID_REPLACE"}) }}'.replace('ID_REPLACE', id)).then(response => response.json()).then(data => {
+if (data.success) {
+alert(data.message + ' (Total dans le panier: ' + data.count + ')');
+}
+});
+});
+});
+		</script>
+	{% endblock %}
+
+
+{% endblock %}

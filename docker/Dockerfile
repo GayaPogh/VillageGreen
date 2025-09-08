@@ -20,6 +20,9 @@ RUN php /var/www/composer-setup.php
 RUN mv composer.phar /usr/bin/composer
 RUN chmod +x /usr/bin/composer
 COPY xdebug.ini /etc/php/8.4/cli/conf.d/20-xdebug.ini
+
 ENV PHP_MEMORY_LIMIT=1024M
+
 WORKDIR /var/www
+
 ENTRYPOINT ["symfony", "server:start", "--allow-all-ip"]

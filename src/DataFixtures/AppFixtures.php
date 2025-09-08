@@ -14,8 +14,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $mainCategories = [];
+        $subCategoriesList = [];
 
-        // Գլխավոր կատեգորիաներ
+        // 1️⃣ Գլխավոր կատեգորիաներ
         foreach (['Claviers', 'Cordes', 'Cuivres', 'Bois', 'Percussion', 'Accessoires'] as $name) {
             $cat = new Categorie();
             $cat->setNom($name);
@@ -23,7 +24,7 @@ class AppFixtures extends Fixture
             $mainCategories[$name] = $cat;
         }
 
-        // Sous-catégories + assign images sc1.jpeg, sc2.jpeg...
+        // 2️⃣ Sous-catégories + images
         $subCategoryData = [
             'Claviers'    => ['Synthétiseur', 'Piano numérique', 'Royale'],
             'Cordes'      => ['Guitare', 'Violon', 'Violoncelle'],
@@ -42,13 +43,15 @@ class AppFixtures extends Fixture
                 $sub->setNom($childName);
                 $sub->setParent($parent);
                 $sub->setImage('sc' . $imageIndex . '.jpeg');
-                $imageIndex++;
                 $manager->persist($sub);
+                $subCategoriesList[] = $sub; // պահում ենք array–ում products–ի համար
+                $imageIndex++;
             }
         }
 
-        // Fournisseur
-        $fournisseurs = [
+        // 3️⃣ Fournisseurs
+        $fournisseursArray = [];
+        $fournisseursData = [
             ['nom' => 'Yamaha', 'categorie' => 'Claviers'],
             ['nom' => 'Fender', 'categorie' => 'Cordes'],
             ['nom' => 'Pearl', 'categorie' => 'Percussion'],
@@ -57,16 +60,17 @@ class AppFixtures extends Fixture
             ['nom' => 'Zildjian', 'categorie' => 'Percussion'],
         ];
 
-        foreach ($fournisseurs as $data) {
+        foreach ($fournisseursData as $data) {
             $f = new Fournisseur();
             $f->setNom($data['nom']);
             $f->setEmail(strtolower($data['nom']).'@example.com');
             $f->setTelephone('01 23 45 67 89');
             $f->addCategorie($mainCategories[$data['categorie']]);
             $manager->persist($f);
+            $fournisseursArray[] = $f;
         }
 
-        // Produit–ներ
+        // 4️⃣ Produit–ներ
         $faker = Faker::create('fr_FR');
 
         for ($i = 0; $i < 30; $i++) {
@@ -82,16 +86,12 @@ class AppFixtures extends Fixture
             $produit->setUpdatedAt(new \DateTimeImmutable());
 
             // Random sous-catégorie
-            $randomCategorie = $manager->getRepository(Categorie::class)
-                ->findOneBy(['nom' => $faker->randomElement([
-                    'Piano numérique', 'Guitare', 'Violon', 'Saxophone',
-                    'Flûte', 'Batterie', 'Casques'
-                ])]);
-
+            $randomCategorie = $faker->randomElement($subCategoriesList);
             $produit->setCategorie($randomCategorie);
 
-            // Եթե Produit entity–դ ունի Fournisseur relation
-            // $randomFournisseur = $manager->getRepository(Fournisseur::class)->findOneBy([]);
+            // Random fournisseur
+            $randomFournisseur = $faker->randomElement($fournisseursArray);
+            // եթե կա relation Produit–Fournisseur
             // $produit->setFournisseur($randomFournisseur);
 
             $manager->persist($produit);

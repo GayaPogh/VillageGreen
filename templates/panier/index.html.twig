@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h2 class="text-center mb-4">🛒 Mon Panier</h2>
+
+		{% if items|length > 0 %}
+			<table class="table table-striped text-center">
+				<thead>
+					<tr>
+						<th>Produit</th>
+						<th>Prix</th>
+						<th>Quantité</th>
+						<th>Sous-total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in items %}
+						<tr>
+							<td>{{ item.produit.libelleLong }}</td>
+							<td>{{ item.produit.prixAchat|format_currency('EUR', locale='fr_FR') }}</td>
+							<td>{{ item.quantity }}</td>
+							<td>{{ item.subtotal|format_currency('EUR', locale='fr_FR') }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<div class="text-end fw-bold">
+				Total:
+				{{ total|format_currency('EUR', locale='fr_FR') }}
+			</div>
+		{% else %}
+			<p class="text-center">Votre panier est vide 😕</p>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -168,4 +168,21 @@ class Produit
 
         return $this;
     }
+
+    // Ավելացնել Produit entity–ում
+public function getNom(): ?string
+{
+    return $this->libelleCourt ?? $this->libelleLong;
+}
+
+public function getPrix(): ?float
+{
+    return $this->prixAchat !== null ? (float)$this->prixAchat : null;
+}
+
+public function getImage(): ?string
+{
+    return $this->photo;
+}
+
 }
