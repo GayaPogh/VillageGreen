@@ -42,27 +42,22 @@
 					</form>
 				</div>
 
-
 				<!-- Icons -->
 				<div class="icons ms-3 d-flex align-items-center">
-					<a href="#" class="ms-2">
-						<img width="20" height="20" src="https://img.icons8.com/forma-bold/24/user.png" alt="user"/>
+					<a href="#" class="ms-2" data-bs-toggle="modal" data-bs-target="#inscriptionModal" title="{% if app.user %}Profile{% else %}Login/Register{% endif %}">
+						<img width="24" height="24" src="https://img.icons8.com/forma-bold/24/user.png" alt="{% if app.user %}Profile{% else %}Login{% endif %}"/>
 					</a>
-					<a href="#" class="ms-2">
-						<img width="20" height="20" src="https://img.icons8.com/forma-bold/24/hearts.png" alt="hearts"/>
-					</a>
-					<a href="{{ path('panier_index') }}" class="position-relative d-inline-block ms-2">
-						<img width="20" height="20" src="https://img.icons8.com/forma-bold/24/shopping-cart.png" alt="shopping-cart"/>
-						{% if panier_count() > 0 %}
-							<span class="badge bg-danger">{{ panier_count() }}</span>
-						{% endif %}
-
-
-					</a>
-
-
 				</div>
+
+
+				<a href="javascript:void(0);" class="position-relative d-inline-block ms-2" onclick="document.getElementById('modal-panier').style.display='block'">
+					<img width="20" height="20" src="https://img.icons8.com/forma-bold/24/shopping-cart.png" alt="shopping-cart"/>
+					{% if panier_count() > 0 %}
+						<span class="badge bg-danger">{{ panier_count() }}</span>
+					{% endif %}
+				</a>
+
 			</div>
-		</nav>
-	</div>
+		</div>
+	</nav>
 </header>

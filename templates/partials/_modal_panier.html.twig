@@ -1,0 +1,28 @@
+<div id="modal-panier" class="modal" style="display:none;">
+	<div class="modal-content">
+		<span class="close" onclick="document.getElementById('modal-panier').style.display='none'">&times;</span>
+		<h2>Mon Panier ({{ panier_count() }})</h2>
+
+		{% set items = panier_items() %}
+		{% if items is empty %}
+			<p>Votre panier est vide.</p>
+		{% else %}
+			<ul>
+				{% for item in items %}
+					<li>{{ item.produit.nom }}
+						x
+						{{ item.quantity }}
+						—
+						{{ item.subtotal }}
+						€</li>
+				{% endfor %}
+			</ul>
+			<p>Total:
+				{{ panier_total() }}
+				€</p>
+			<a href="{{ path('panier_index') }}">Voir le panier complet</a>
+
+
+		{% endif %}
+	</div>
+</div>

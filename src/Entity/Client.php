@@ -40,6 +40,13 @@ class Client
 #[ORM\JoinColumn(name: "Id_Commercial", referencedColumnName: "id", onDelete: "SET NULL", nullable: true)]
 private ?Commercial $commercial = null;
 
+#[ORM\Column(type:"string", length:20, nullable: true)]
+private ?string $typeClient = null;
+
+public function getTypeClient(): ?string { return $this->typeClient; }
+public function setTypeClient(string $typeClient): static { $this->typeClient = $typeClient; return $this; }
+
+
 public function getCommercial(): ?Commercial
 {
     return $this->commercial;

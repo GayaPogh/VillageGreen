@@ -96,4 +96,23 @@ class Fournisseur
 
         return $this;
     }
+
+    public function addCategory(Categorie $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addFournisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categorie $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeFournisseur($this);
+        }
+
+        return $this;
+    }
 }

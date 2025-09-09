@@ -31,6 +31,11 @@
 			{# ---- HEADER ---- #}
 			{% include 'partials/_header.html.twig' %}
 
+
+			{% include 'partials/_modal_inscription.html.twig' with {'form': form|default(null)} %}
+
+			{% include 'partials/_modal_panier.html.twig' %}
+
 			{# ---- CONTENT ---- #}
 			<main class="flex-grow-1"> {% block body %}{% endblock %}
 				</main>
@@ -40,6 +45,15 @@
 					{% include 'partials/_footer.html.twig' %}
 				</footer>
 
+				<script>
+					// փակել modal երբ կտավի դուրս click անես
+window.onclick = function (event) {
+var modal = document.getElementById('modal-panier');
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}
+				</script>
 
 				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 				{% block javascripts %}{% endblock %}

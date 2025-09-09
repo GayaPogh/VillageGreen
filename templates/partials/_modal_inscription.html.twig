@@ -1,0 +1,22 @@
+{% set form = registration_form() %}
+<div class="modal fade" id="inscriptionModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Bienvenue Chez VillageGreen</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				{% if form is defined %}
+					{{ form_start(form) }}
+					{{ form_row(form.nom) }}
+					{{ form_row(form.prenom) }}
+					{{ form_row(form.email) }}
+					{{ form_row(form.plainPassword) }}
+					<button type="submit" class="btn btn-success w-100">S’inscrire</button>
+					{{ form_end(form) }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

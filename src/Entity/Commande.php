@@ -96,4 +96,26 @@ class Commande
         }
         return $this;
     }
+
+    public function addLignesCommande(LigneCommande $lignesCommande): static
+    {
+        if (!$this->lignesCommande->contains($lignesCommande)) {
+            $this->lignesCommande->add($lignesCommande);
+            $lignesCommande->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLignesCommande(LigneCommande $lignesCommande): static
+    {
+        if ($this->lignesCommande->removeElement($lignesCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($lignesCommande->getCommande() === $this) {
+                $lignesCommande->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -32,6 +32,16 @@ class Client {
 	adresse : string
 	<color:#0000dd>commandes : Commande[]</color>
 	<color:#0000dd>commercial : Commercial</color>
+	typeClient : string
+}
+
+class Paiement {
+	**id : int**
+	type : string
+	datePaiement : DateTimeInterface
+	montant : string
+	valide : bool
+	<color:#0000dd>commande : Commande</color>
 }
 
 class Categorie {
@@ -47,12 +57,14 @@ class Categorie {
 class Utilisateur {
 	**id : int**
 	email : string
-	motDePasseH : string
+	password : string
 	role : string
 	dateCreation : DateTimeInterface
 	actif : bool
 	<color:#0000dd>commercial : Commercial</color>
 	<color:#0000dd>client : Client</color>
+	nom : string
+	prenom : string
 }
 
 class LigneCommande {
@@ -81,6 +93,7 @@ Commande "1"--"*" LigneCommande
 Fournisseur "*"--"*" Categorie
 Commercial "1"--"*" Client
 Commercial "1"--"*" Utilisateur
+Paiement "*"--"1" Commande
 Categorie "*"--"1" Categorie
 Categorie "1"--"*" Produit
 Utilisateur "*"--"1" Client
